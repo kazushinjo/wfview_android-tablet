@@ -2,6 +2,9 @@
 #include "qserialportinfo.h"
 #include "ui_settingswidget.h"
 #include "androidcompat.h"
+#ifdef Q_OS_ANDROID
+#include "androidkeypad.h"
+#endif
 #include <QAbstractItemView>
 #include <QApplication>
 #include <QHBoxLayout>
@@ -57,6 +60,12 @@ settingswidget::settingswidget(QWidget *parent) :
             | Qt::ImhNoPredictiveText
             | Qt::ImhNoAutoUppercase);
     }
+    // ...but the IME still composes full-width text on some devices, so the
+    // connection fields use the in-app keyboards instead (androidkeypad.h).
+    ui->ipAddressTxt->setPlaceholderText(QStringLiteral("タップして IP アドレスを入力"));
+    new AndroidKeypadOpener(ui->ipAddressTxt, true);
+    new AndroidKeypadOpener(ui->usernameTxt, false);
+    new AndroidKeypadOpener(ui->passwordTxt, false);
 
     // The designer's fixed maximum widths clip the Android-sized text (the
     // page list, group titles, checkbox labels). Lift the caps so layouts

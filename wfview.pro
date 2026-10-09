@@ -508,6 +508,7 @@ HEADERS  += \
     include/scrolltest.h \
     include/selectradio.h \
     include/settingswidget.h \
+    include/androidkeypad.h \
     include/sidebandchooser.h \
     include/tablewidget.h \
     include/tciserver.h \
