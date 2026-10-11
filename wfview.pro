@@ -569,8 +569,9 @@ DISTFILES += \
 # build files, etc. under this directory (populated separately from this file).
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-    ANDROID_VERSION_NAME = 2026.10.10
-    ANDROID_VERSION_CODE = 20261010
+    ANDROID_VERSION_NAME = 1.0
+    # Must keep increasing for in-place updates (2026.10.10 was 20261010).
+    ANDROID_VERSION_CODE = 20261012
     ANDROID_ABIS = arm64-v8a
 
     # This Qt kit's NDK floor is API 28 (see mkspecs/qdevice.pri); vendored libopus
