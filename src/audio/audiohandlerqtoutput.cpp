@@ -24,6 +24,13 @@ bool audioHandlerQtOutput::openDevice() noexcept
 
 #if (defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6,0,0)))
     audioOutput->setBufferSize(nativeFormat.bytesForDuration(setupData.latency * 100));
+#elif defined(Q_OS_ANDROID)
+    // Qt's OpenSL ES sink queues 4 buffers of this size, so sizing it to the
+    // whole latency (500 ms) put ~2 s of audio inside the sink, on top of the
+    // ring buffer below -- RX audio ran ~3 s behind and kept playing long
+    // after transmitting. The ring buffer absorbs network jitter; keep the
+    // sink small.
+    audioOutput->setBufferSize(nativeFormat.bytesForDuration(60 * 1000));
 #else
     audioOutput->setBufferSize(nativeFormat.bytesForDuration(setupData.latency * 1000));
 #endif
